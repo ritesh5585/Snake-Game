@@ -90,6 +90,7 @@ section .infos {
 .block {
     width: 25px;
     height: 25px;
+    border-radius: 50%;
     border: 1px solid #1f2018;
 }
 
@@ -178,3 +179,4 @@ section .infos {
         font-size: 14px;
     }
 }
+

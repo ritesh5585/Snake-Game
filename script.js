@@ -5,6 +5,8 @@ const restartBtn = document.querySelector(".restart");
 const gameStart = document.querySelector(".start-game");
 const gameOver = document.querySelector(".game-over");
 
+console.log("hello")
+
 let highScoreElement = document.getElementById("high-score");
 let scoreElement = document.getElementById("score");
 let timeElement = document.getElementById("time");
@@ -16,7 +18,7 @@ let rows = Math.floor(board.clientHeight / BLOCKm);
 let intervalId = null;
 let timerId = null;
 let score = 0;
-let time = `00-00`;
+let time = `00-00`; 
 
 let highScore = localStorage.getItem("highScore") || 0;
 highScoreElement.innerText = highScore;
@@ -64,7 +66,7 @@ startBtn.addEventListener("click", () => {
 
 timerId = setInterval(() => {
   let [min, sec] = time.split("-").map(Number);
-  
+
   if (sec === 59) {
     min++;
     sec = 0;
@@ -81,7 +83,7 @@ const render = () => {
 
   const pallet = `${food.x}-${food.y}`;
   blocks[pallet].classList.add("food");
-  
+
   // move snake from direction
   if (direction === "right") {
     head = { x: snake[0].x, y: snake[0].y + 1 };
@@ -95,10 +97,9 @@ const render = () => {
   // game over condition
   if (head.x < 0 || head.x >= rows || head.y < 0 || head.y >= cols) {
     clearInterval(intervalId);
-    gameStart.style.display = "none";
     gameOver.style.display = "flex";
   }
-  
+
   //  food consume
   if (head.x == food.x && head.y == food.y) {
     const pallet = `${food.x}-${food.y}`;
@@ -114,7 +115,7 @@ const render = () => {
 
     score++;
     scoreElement.innerText = score;
-    
+
     if (score > highScore) {
       highScore = score;
       localStorage.setItem("highScore", highScore.toString());
@@ -137,12 +138,14 @@ const render = () => {
 
     if (!cell) {
       console.warn("Invalid cell:", key);
+      gameOver.style.display = "flex";
       return;
     }
     cell.classList.add("fill");
   });
 };
 
+// restart game
 const restart = async () => {
   if (intervalId) {
     clearInterval(intervalId);
@@ -158,7 +161,7 @@ const restart = async () => {
       blocks[key]?.classList.remove("fill");
     });
   });
-  
+
   score = 0;
   time = "00-00";
 
@@ -174,9 +177,9 @@ const restart = async () => {
     x: Math.floor(Math.random() * rows),
     y: Math.floor(Math.random() * cols),
   };
-  
+
   blocks[`${food.x}-${food.y}`].classList.add("food");
-  
+
   await Promise.resolve();
   intervalId = setInterval(render, 300);
 };
