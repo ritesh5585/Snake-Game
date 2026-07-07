@@ -171,7 +171,7 @@ document.getElementById('list').addEventListener('click', (e) => {
 
 // ============================================================================
 
-const prompt = require('prompt-sync')();
+let prompt = require('prompt-sync')();
 let n = Number(prompt("give your number"))
 
 for (let i = 1; i <= 10; i++) {
